@@ -1,5 +1,19 @@
 language: python
 python:
   - "2.7"
+services:
+  - mysql
+  - mongodb
+  - redis
+  - rabbitmq
+
+# before_install:
 install: pip install -r requirements.txt
+before_script:
+  - mysql -e 'drop database if exists tallmad'
+  - mysql -e 'create database tallmad'
+  - python iwritecode/helloworld.py &
 script: nosetests --where=tests/
+# after_success
+# after_failure
+# after_script
